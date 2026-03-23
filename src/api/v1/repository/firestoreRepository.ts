@@ -1,7 +1,7 @@
 import { FirebaseMessagingSessionError } from "firebase-admin/lib/utils/error";
 import { db } from "../../../config/firebaseConfig";
 
-const createId = async(): Promise<string> => {
+const createId = async(): Promise<number> => {
     try {
         const docRef = db.collection("resource-info").
             doc("resource-global-metrics");
@@ -13,7 +13,7 @@ const createId = async(): Promise<string> => {
         docRef.update({
             "count": newCount,
         });
-        return newCount.toString();
+        return newCount;
     } catch (error:unknown) {
         const errorMessage =
             error instanceof Error ? error.message : "Unknown Error";
@@ -25,10 +25,10 @@ const createId = async(): Promise<string> => {
 export const createDocument = async<T>(
     collectionName: string,
     data: Partial<T>,
-): Promise<string> => {
+): Promise<number> => {
     try {
         const id = await createId();
-        await db.collection(collectionName).doc(id).set(data);
+        await db.collection(collectionName).doc(id.toString()).set(data);
         return id;
     } catch (error: unknown) {
         const errorMessage =
