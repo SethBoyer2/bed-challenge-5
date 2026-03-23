@@ -59,3 +59,20 @@ export const getItemByIdHandler = async (
     }
 };
 
+export const deleteItemHandler = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    try {
+        const { id } = req.params; // Grab id from request parameter.
+        // Call service function.
+        await resourceServices.deleteItem(id as string);
+
+        res.status(HTTP_STATUS.OK).json(
+            successResponse(undefined, "Successfully deleted item") // Use successful response model.
+        );
+    } catch (error: unknown) {
+        next(error);
+    }
+};
