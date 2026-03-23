@@ -40,3 +40,22 @@ export const getAllItemsHandler = async (
     }
 };
 
+export const getItemByIdHandler = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    try {
+        const { id } = req.params; // grab id from parameter body.
+
+        // Call service function.
+        const resource = await resourceServices.getItemById(id as string);
+
+        res.status(HTTP_STATUS.OK).json(
+            successResponse(resource, "Item successfully retrieved") // Use successful response model.
+        );
+    } catch (error: unknown) {
+        next(error);
+    }
+};
+
