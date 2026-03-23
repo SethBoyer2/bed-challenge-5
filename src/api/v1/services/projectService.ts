@@ -40,3 +40,21 @@ export const getAllItems = async (): Promise<Resource[]> => {
                          items: ${errorMessage}`);
     }
 };
+
+export const getItemById = async(
+    id: string,
+): Promise<Resource> => {
+    try {
+        const resource = await firestoreRepository
+                                    .getDocumentById<Resource>(COLLECTION, id);
+
+        if (!resource) throw new Error(`Resource with id: (${id}) not found`);
+
+        return resource;
+    } catch (error:unknown) {
+        const errorMessage =
+            error instanceof Error ? error.message : "Unknown Error";
+        throw new Error(`Failed to retrieve \
+                         item by id: ${errorMessage}`);
+    }
+};
