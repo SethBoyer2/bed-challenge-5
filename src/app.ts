@@ -5,7 +5,8 @@ import {
     consoleLogger,
 } from "./api/v1/middleware/logger";
 import errorHandler from "./api/v1/middleware/errorHandler";
-
+import { getHelmetConfig } from "./config/helmetConfig";
+import cors from "cors";
 /** import the routes **/
 
 
@@ -18,6 +19,8 @@ if (process.env.NODE_ENV === "production") {
     app.use(consoleLogger);
 }
 
+app.use(cors(getCorsOptions()));
+app.use(getHelmetConfig())
 app.use(express.json());
 
 
