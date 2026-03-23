@@ -13,6 +13,7 @@ import { getHelmetConfig } from "./config/helmetConfig";
 import cors from "cors";
 import { getCorsOptions } from "./config/corsConfig";
 import resourceRouter from "./api/v1/routes/projectRoutes";
+import setupSwagger from "./config/swagger";
 
 const app: Express = express();
 
@@ -30,6 +31,8 @@ app.use(express.json());
 
 /** Update the api endppoints with appropriate routes **/
 app.use("/api/v1/resource", resourceRouter);
+
+setupSwagger(app)
 
 app.use(errorHandler);
 
