@@ -27,3 +27,16 @@ export const createResource = async (
         throw new Error(`Failed to create item: ${errorMessage}`);
     }
 };
+
+export const getAllItems = async (): Promise<Resource[]> => {
+    try {
+        return (
+            await firestoreRepository.getAllDocuments<Resource>(COLLECTION)
+        );
+    } catch (error: unknown) {
+        const errorMessage =
+            error instanceof Error ? error.message : "Unknown Error";
+        throw new Error(`Failed to retrieve all \
+                         items: ${errorMessage}`);
+    }
+};
