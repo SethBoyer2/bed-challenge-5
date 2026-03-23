@@ -12,11 +12,11 @@ export const getCorsOptions = () => {
 
     // Strict origins in production
     return {
-        origin: process.env.ALLOWED_ORIGINS?.split(",") || [],
+        origin: process.env.ALLOWED_ORIGINS?.split(",") || [], // Read allowed origins from env var and append to an array
         credentials: true,
-        methods: ["GET", "POST", "PUT", "DELETE"],
-        allowedHeaders: ["Content-Type", "Authorization"],
-        maxAge: 31536000
+        methods: ["GET", "POST", "PUT", "DELETE"], // allowed methods
+        allowedHeaders: ["Content-Type", "Authorization"], // allowed headers
+        maxAge: 31536000 // Max age for preflight cache (max possible)
     };
 };
 
