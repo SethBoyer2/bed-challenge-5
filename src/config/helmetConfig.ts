@@ -6,9 +6,9 @@ export const getHelmetConfig = () => {
 
     // Base configuration for APIs
     const baseConfig = {
-        contentSecurityPolicy: false, // Disable for JSON APIs
-        hidePoweredBy: true, // Always hide server info
-        noSniff: true, // Always prevent MIME sniffing
+        contentSecurityPolicy: false, // Limits what can be executed or fetched, reducing risk of malicious injection
+        hidePoweredBy: true, // Removes information regarding tech stack, preventing vulnerability gathering
+        noSniff: true, // Prevent MIME sniffing by default to avoid executing hidden malicious code in images/gifs
     };
 
     if (isDevelopment) {
@@ -21,13 +21,13 @@ export const getHelmetConfig = () => {
     // Production gets full security
     return helmet({
         ...baseConfig,
-        hsts: {
-            maxAge: 31536000,
-            includeSubDomains: true,
-            preload: true,
+        hsts: { // hsts force HTTPS data transit only to help prevent MITM
+            maxAge: 31536000, // Remember to use only HTTPS for maximum amount of time
+            includeSubDomains: true, // Apply HSTS to all subdomains
+            preload: true, // Hardcode sites as HTTPS only, preventing HTTP request altogether
         },
-        frameguard: { action: "deny" },
-        referrerPolicy: { policy: "no-referrer" },
+        frameguard: { action: "deny" }, // Disallow frames to prevent clickjacking attacks
+        referrerPolicy: { policy: "no-referrer" }, // Prevent tracking for referred links
     });
 };
 
