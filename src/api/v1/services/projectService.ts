@@ -58,3 +58,16 @@ export const getItemById = async(
                          item by id: ${errorMessage}`);
     }
 };
+
+export const deleteItem = async (
+    id: string,
+): Promise<void> => {
+    try {
+        await firestoreRepository.deleteDocument(COLLECTION, id);
+    } catch (error: unknown) {
+        const errorMessage =
+            error instanceof Error ? error.message : "Unknown Error";
+        throw new Error(`Failed to delete \
+                         item: ${errorMessage}`);
+    }
+};
