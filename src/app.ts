@@ -1,4 +1,8 @@
 import express, { Express } from "express";
+import dotenv from "dotenv";
+
+dotenv.config();
+
 import {
     accessLogger,
     errorLogger,
@@ -7,8 +11,8 @@ import {
 import errorHandler from "./api/v1/middleware/errorHandler";
 import { getHelmetConfig } from "./config/helmetConfig";
 import cors from "cors";
-/** import the routes **/
-
+import { getCorsOptions } from "./config/corsConfig";
+import resourceRouter from "./api/v1/routes/projectRoutes";
 
 const app: Express = express();
 
@@ -25,9 +29,7 @@ app.use(express.json());
 
 
 /** Update the api endppoints with appropriate routes **/
-
-
-
+app.use("/api/v1/resource", resourceRouter);
 
 app.use(errorHandler);
 
