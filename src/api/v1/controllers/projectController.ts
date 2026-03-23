@@ -22,3 +22,21 @@ export const createResourceHandler = async (
         next(error);
     }
 };
+
+export const getAllItemsHandler = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    try {
+        // Call service function.
+        const resources = await resourceServices.getAllItems();
+
+        res.status(HTTP_STATUS.OK).json(
+            successResponse(resources, "Items successfully retrieved") // Use successful response model.
+        );
+    } catch (error: unknown) {
+        next(error);
+    }
+};
+
